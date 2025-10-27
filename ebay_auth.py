@@ -1,3 +1,8 @@
+# Copyright (c) 2025 islysky18
+# 
+# This software is released under the MIT License.
+# https://opensource.org/licenses/MIT
+#
 # ebay_auth.py
 # Core OAuth helpers for eBay (Production). Supports auth URL generation,
 # authorization-code exchange, refresh, and token management.

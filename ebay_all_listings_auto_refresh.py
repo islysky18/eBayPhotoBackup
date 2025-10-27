@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# Copyright (c) 2025 islysky18
+# 
+# This software is released under the MIT License.
+# https://opensource.org/licenses/MIT
+#
 # eBay ALL Listings backup with AUTO-REFRESH
 import csv, time, base64, xml.etree.ElementTree as ET
 from datetime import datetime, timedelta

@@ -1,3 +1,8 @@
+# Copyright (c) 2025 islysky18
+# 
+# This software is released under the MIT License.
+# https://opensource.org/licenses/MIT
+#
 # ebay_oauth_manager.py
 # Simple CLI for your OAuth flow and a GetUser test.
 # Commands:
