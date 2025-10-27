@@ -18,7 +18,7 @@ Usage:
   3) python ebay_all_listings_by_sku.py
 """
 
-import csv, time, xml.etree.ElementTree as ET
+import csv, time, base64, xml.etree.ElementTree as ET, os
 from datetime import datetime, timedelta
 from pathlib import Path
 from dateutil.relativedelta import relativedelta
@@ -362,14 +362,23 @@ def get_all_items(seen_ids: set, counters: dict):
                         label = sanitize(sku or item_id)
                         folder = IMAGES_DIR / label
                         folder.mkdir(parents=True, exist_ok=True)
+                        
+                        skipped = 0
                         for i, u in enumerate(urls, start=1):
                             fname = f"{label}.jpg" if len(urls) == 1 else f"{label}_{i}.jpg"
                             dest = folder / fname
                             if dest.exists():
+                                skipped += 1
                                 continue
                             if download_image(u, dest):
                                 counters["images"] += 1
+                                print(f"    Downloaded: {fname}")
+                            else:
+                                print(f"    Failed to download: {fname}")
                             time.sleep(0.2)
+                        
+                        if skipped > 0:
+                            print(f"    Skipped {skipped} existing images for {label}")
                     
                     append_rows(batch)
             
@@ -417,9 +426,17 @@ def main():
 
     print("\n==== DONE ====")
     print(f"Unique items processed: {len(seen_ids)}")
-    print(f"Images downloaded: {counters['images']}")
-    print(f"CSV at: {CSV_PATH.resolve()}")
-    print(f"Images at: {IMAGES_DIR.resolve()}")
+    print(f"New images downloaded: {counters['images']}")
+    
+    # Count total images in the backup
+    total_images = 0
+    for dirpath, dirnames, filenames in os.walk(IMAGES_DIR):
+        total_images += len([f for f in filenames if f.endswith('.jpg')])
+    print(f"Total images in backup: {total_images}")
+    
+    print(f"\nBackup Locations:")
+    print(f"CSV file → {CSV_PATH.resolve()}")
+    print(f"Images → {IMAGES_DIR.resolve()}")
 
 if __name__ == "__main__":
     main()
