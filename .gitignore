@@ -1,0 +1,21 @@
+# Sensitive eBay credentials and tokens
+accessToken.txt
+refresh_token.txt
+client_id.txt
+client_secret.txt
+ru_name.txt
+token_meta.json
+token.txt
+
+# Output directories
+out_all/
+*.csv
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# OS files
+.DS_Store
+.env
